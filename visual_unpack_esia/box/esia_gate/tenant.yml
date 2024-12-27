@@ -1,0 +1,27 @@
+production:
+  default:
+    db_config:
+      adapter: postgresql
+      encoding: unicode
+      host: db
+      pool: 5
+      port: 5432
+      database: main_esia_db
+      username: postgres
+      password: 0QPnk5dVcAEg
+      advisory_locks: false
+      prepared_statements: false
+  rnds_main:
+    db_config:
+      adapter: postgresql
+      encoding: unicode
+      host: db
+      pool: 5
+      port: 5432
+      database: user_esia_db
+      username: postgres
+      password: 0QPnk5dVcAEg
+      advisory_locks: false
+      prepared_statements: false
+    secrets:
+      uris: '["https://esia.example.com"]'

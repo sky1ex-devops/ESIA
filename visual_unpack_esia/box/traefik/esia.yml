@@ -1,0 +1,13 @@
+http:
+  routers:
+    esia-router:
+      rule: "Host(`esia.example.com`)"
+      service: esia-service
+      tls: {}
+      entryPoints:
+      - "websecure"
+  services:
+    esia-service:
+      loadBalancer:
+        servers:
+        - url: "http://192.168.88.126:3000"

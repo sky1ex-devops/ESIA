@@ -1,0 +1,88 @@
+
+
+  
+  @font-face {
+    font-family: 'Druk';
+    src: url('../DrukTextWide-Bold.ttf') format('truetype');
+  }
+  .main {
+    
+      padding: 100px 20px 1px 100px ;
+      color: hsl(24deg,100%,47%);
+      font-size: 32px;
+      font-stretch: 50%;
+      font-weight: 10;
+      font-family:"Druk", sans-serif;
+}
+
+      
+  .main2{
+      padding: 10px 70px 15px 70px ;
+
+      color: #fdfdfd;
+      display: flex; align-items: center; justify-content: center;
+      margin-block-start: 1em;
+      margin-block-end: 1em;
+      margin-inline-start: 17%;
+      margin-inline-end: 17%;
+      unicode-bidi: isolate;
+      font-family:"Druk", sans-serif;
+      font-stretch: 50%;
+      line-height: 199%;
+      box-sizing: inherit;
+  
+  } 
+  
+@font-face {
+    font-family: 'Nekst';
+    src: url('../Nekst-Thin.ttf') format('truetype');
+  }
+
+  .logo{
+      padding: 5px 5px 5px 50px;
+  }
+  
+  .blocks{
+      padding: 25px 100px 25px 50px;
+      border: 2px solid #686868;
+      border-radius: 16px;
+      font-stretch: 60%;
+      font-size: 22px;
+      font-family:"Nekst";
+      margin-bottom: 20px;
+      
+  }
+
+  .text2{
+    color: #fff; 
+    font-family:"Nekst", sans-serif;
+    font-size: 17px;
+    font-stretch: 60%;
+ }
+
+  @font-face {
+
+    font-family: 'Nekst2';
+    src: url('../TTNormsPro-ExtraLight.ttf') format('truetype');
+
+ 
+  }
+  .text{
+    color: #fff; 
+    font-family:"Nekst2", sans-serif;
+    font-size: 17px;
+    font-stretch: 60%;
+ }
+
+
+    
+.textin{
+    padding: 1px 1px 5px 25px ;
+    color: #fff; background: transparent;
+    border: none;
+    border-bottom: 1px solid #fff;
+    font-stretch: 60%;
+    font-size: 18px;
+    font-family:"Nekst2", sans-serif;
+    
+}

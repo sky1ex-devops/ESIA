@@ -1,0 +1,62 @@
+x-log: &log
+  options:
+    max-size: '50m'
+    max-file: '3'
+  driver: json-file
+
+x-base: &base
+  restart: always
+  stop_grace_period: ${STOP_GRACE_PERIOD-30}s
+  logging: *log
+ 
+services:
+  rails:
+    container_name: "esia-gw-rails"
+    image: ${SENTINEL_IMAGE}:${SENTINEL_IMAGE_TAG}
+    <<: *base
+    env_file: 
+      - path: .env
+        required: true
+      - path: ../environments/.env.gate
+        required: false
+    extra_hosts:
+      - "db:${DATABASE_IP}"
+      - "redis:${REDIS_IP}"
+      - "signer:${SIGNER_IP}"
+    volumes:
+      - "./tenant.yml:/home/app/config/gorynich_config.yml:ro"
+      - "./openid_signing.key:/home/app/config/keys/openid_signing.key:rw"
+    ports:
+      - 3000:3000
+
+  jobs:
+    container_name: "esia-gw-jobs"
+    image: ${SENTINEL_IMAGE}:${SENTINEL_IMAGE_TAG}
+    <<: *base
+    env_file: 
+      - path: .env
+        required: true
+      - path: ../environments/.env.gate
+        required: false 
+    extra_hosts:
+      - "${DATABASE_HOST}:${DATABASE_IP}"
+      - "redis:${REDIS_IP}"
+    volumes:
+      - "./tenant.yml:/home/app/config/gorynich_config.yml:ro"
+      - "./openid_signing.key:/home/app/config/keys/openid_signing.key:rw"
+
+  rufus:
+    container_name: "esia-gw-rufus"
+    image: ${SENTINEL_IMAGE}:${SENTINEL_IMAGE_TAG}
+    <<: *base
+    env_file: 
+      - path: .env
+        required: true
+      - path: ../environments/.env.gate
+        required: false 
+    extra_hosts:
+      - "db:${DATABASE_IP}"
+      - "redis:${REDIS_IP}"
+    volumes:
+      - "./tenant.yml:/home/app/config/gorynich_config.yml:ro"
+      - "./openid_signing.key:/home/app/config/keys/openid_signing.key:rw"

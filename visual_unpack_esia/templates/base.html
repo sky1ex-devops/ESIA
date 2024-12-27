@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>{{ title }}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body style="background-color: #000000">
+    <img class="logo" src="{{url_for('static', filename='logo-ae5da1b5409498390a45c78d980cf949e2151129cb3ab4b4f309290dac32b91e.svg')}}"/>
+
+<div class="main">
+  <h1>Давайте настроим {{ title }}!</h1>
+</div>
+  <!-- Просим заполнить переменные для ЕСИА-Шлюза -->
+<div class="main2">
+    <form method="post" action="/run">
+        <div class="blocks">
+            <h1> Укажите параметры для ЕСИА Шлюза </h1>
+            <h3 class="text2">  Параметры Docker образа для ЕСИА Шлюза:</h3>
+            <p class="text">Репозиторий ЕСИА-шлюза (SENTINEL_IMAGE):  <input class="textin" type="text" size="30px" name="SENTINEL_IMAGE" value="harbor.rnds.pro/sentinel/sentinel-ror"/></p>
+            <p class="text">Версия коробки ЕСИА-шлюза(SENTINEL_IMAGE_TAG):   <input class="textin" type="text" size="30px" name="SENTINEL_IMAGE_TAG" value="box2.32"></p>
+            <p class="text">URI адрес ЕСИА Шлюза (ESIA_GATE_URI):   <input class="textin" type="text" size="30px" name="ESIA_GATE_URI" value= "https://esia.example.com"></p>
+            <br>
+            <h3 class="text2"> Адреса хостов инфраструктуры Шлюза</h3>
+            <p class="text">Заменить на IP адрес инстанса установки signer (SIGNER_IP):   <input class="textin" type="text" size="30px" name="SIGNER_IP" value="192.168.88.126"></p>
+            <p class="text">Заменить на IP адрес инстанса базы данных PostgreSQL (DATABASE_IP):   <input class="textin" type="text" size="30px" name="DATABASE_IP" value="192.168.88.126"></p>
+            <p class="text">Заменить на IP адрес инстанса базы данных Redis (REDIS_IP):   <input class="textin" type="text" size="30px" name="REDIS_IP" value="192.168.88.126"></p>
+
+            <br>
+            <h3 class="text2">Пароль к главной учетной записи ЕСИА Шлюза (логин - admin@esia.pro)</h3>
+            <p class="text">Пароль:   <input class="textin" type="text" size="30px" name="MAIN_ADMIN_PASSWORD" value="768^bBrmeMC"></p>
+
+            <br>  
+            <h3 class="text2">Настройки доступа к вашему почтовому серверу</h3>
+            <p class="text">SMTP_ADDRESS:  <input class="textin" type="text" size="35px" name="SMTP_ADDRESS" value="mail.yandex.ru"></p>
+            <p class="text">SMTP_USER_NAME:   <input class="textin" type="text" size="35px" name="SMTP_USER_NAME" value="test"></p>
+            <p class="text">SMTP_PASSWORD:   <input class="textin" type="text" size="35px" name="SMTP_PASSWORD" value="testpass"></p>
+            <p class="text">SMTP_PORT:   <input class="textin" type="text" size="35px" name="SMTP_PORT" value="465"></p>
+        </div>
+
+  <!-- Просим заполнить Переменные окружения Signer -->
+        <div class="blocks">
+            <h1> Укажите параметры для Signer</h1>
+            <p class="text">Репозиторий SIGNER (SIGNER_IMAGE):  <input class="textin" type="text" size="30px" name="SIGNER_IMAGE" value="harbor.rnds.pro/rnds/signer-cpp"/></p>
+            <p class="text">Версия SIGNER(SIGNER_IMAGE_TAG):   <input class="textin" type="text" size="30px" name="SIGNER_IMAGE_TAG" value="smolensk-csp"></p>
+       
+            <p class="text">Имя пользователя для http basic authentication (SIGNER_USERNAME):   <input class="textin" type="text" size="30px" name="SIGNER_USERNAME" value="admin"></p>
+            
+            <p class="text">Пароль пользователя для http basic authentication (SIGNER_PASSWORD):   <input class="textin" type="text" size="30px" name="SIGNER_PASSWORD" value="SIGNER_PASSWORD"></p>
+   
+            <p class="text">Внешний порт контейнера с Signer (SIGNER_WEB_PORT):   <input class="textin" type="text" size="30px" name="SIGNER_WEB_PORT" value="8505"></p>
+        
+            <p class="text">Используемый криптопровайдер для обращения к сертификату (может принимать значения: csp, openssl) (SIGNER_PROVIDER):   <input class="textin" type="text" size="30px" name="SIGNER_PROVIDER" value="csp"></p>
+        
+            <p class="text">[Если криптопровайдером выбран CSP] Лицензионный номер для криптопро CSP на одно рабочее место (CRYPTOPRO_CSP_LICENSE):   <input class="textin" type="text" size="30px" name="CRYPTOPRO_CSP_LICENSE" value="768^50506-70007-49810-008YB-507B4"></p>
+       
+            <p class="text">[Если криптопровайдером выбран CSP] Алиас сертификата (необходим для выполнения запросов к конкретному сертификату. Может быть произвольным) (CRYPTOPRO_CSP_ALIAS):   <input class="textin" type="text" size="30px" name="CRYPTOPRO_CSP_ALIAS" value="esia"></p>
+      
+            <p class="text">[Если криптопровайдером выбран CSP] Имя криптоконтейнера (находится в name.key криптоконтейнера) (CRYPTOPRO_CSP_NAME):   <input class="textin" type="text" size="30px" name="CRYPTOPRO_CSP_NAME" value="pfx-dac16c25-dddb-1dc6-5b7e-6d8ef69f9c31"></p> 
+      
+            <p class="text">[Если криптопровайдером выбран CSP] Pin код для криптоконтейнера (если он есть, иначе оставить пустым) (CRYPTOPRO_CSP_PIN):   <input class="textin" type="text" size="30px" name="CRYPTOPRO_CSP_PIN" value=""></p> 
+        </div>
+
+    <!-- Переменные окружения базы данных -->
+        <div class="blocks">
+            <h2> Значения Docker образа для БД</h2>
+            <br>
+            <h3 class="text">Репозиторий образа (DATABASE_IMAGE):   <input class="textin" type="text" size="30px" name="DATABASE_IMAGE" value="postgres"></h3>
+            <br>
+            <h3 class="text">Версия (DATABASE_IMAGE_TAG):   <input class="textin" type="text" size="30px" name="DATABASE_IMAGE_TAG" value="16"></h3>
+            <br>
+            <h3 class="text">Путь к файлам БД на хостовой машине (DATABASE_DATA_PATH):   <input class="textin" type="text" size="30px" name="DATABASE_DATA_PATH" value="/storage/infra/gate_postgres/data"></h3>
+            <br>
+            <h2> Значения Docker образа для БД</h2>
+            <h3 class="text">(DATABASE_HOST):   <input class="textin" type="text" size="30px" name="DATABASE_HOST" value="db"></h3>
+            <h3 class="text">(POSTGRES_NAME):   <input class="textin" type="text" size="30px" name="POSTGRES_NAME" value="main_esia_db"></h3>
+            <h3 class="text">(POSTGRES_USER):   <input class="textin" type="text" size="30px" name="POSTGRES_USER" value="postgres"></h3>
+            <h3 class="text">(POSTGRES_PASSWORD):   <input class="textin" type="text" size="30px" name="POSTGRES_PASSWORD" value="0QPnk5dVcAEg"></h3>
+            <h3 class="text">(DATABASE_PORT):   <input class="textin" type="text" size="30px" name="DATABASE_PORT" value="5432"></h3>
+        </div>
+
+    <!-- Переменные окружения Redis -->     
+        <div class="blocks">
+            <h2> Переменные окружения Redis</h2>
+            <br>
+            <h3 class="text">Путь к файлам Redis на хостовой машине (REDIS_DATA_PATH):   <input class="textin" type="text" size="30px" name="REDIS_DATA_PATH" value="/storage/infra/redis_postgres/data"></h3>
+            <br>
+            <h2> Значения Docker образа для Redis</h2>
+            <h3 class="text"> Репозиторий образа (REDIS_IMAGE):   <input class="textin" type="text" size="30px" name="REDIS_IMAGE" value="redis"></h3>
+            <h3 class="text"> Версия REDIS (REDIS_IMAGE_TAG):   <input class="textin" type="text" size="30px" name="REDIS_IMAGE_TAG" value="latest"></h3>
+            <h3 class="text"> Внешний порт контейнера Redis (REDIS_PORT):   <input class="textin" type="text" size="30px" name="REDIS_PORT" value="6379"></h3>
+            <br>
+        </div>
+
+
+            
+<br>      
+        <input type="submit" value="Применить">
+    </form>
+</div>
+
+</body>
+</html>

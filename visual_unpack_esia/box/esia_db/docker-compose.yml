@@ -1,0 +1,26 @@
+x-log: &log
+  options:
+    max-size: '50m'
+    max-file: '3'
+    labels: com.docker.compose.service
+  driver: json-file
+
+x-base: &base
+  restart: always
+  stop_grace_period: ${STOP_GRACE_PERIOD-30}s
+  logging: *log
+
+services:
+  postgres:
+    container_name: db
+    <<: *base
+    image: ${DATABASE_IMAGE-postgres}:${DATABASE_IMAGE_TAG-16}
+    env_file: 
+      - path: .env
+        required: true
+      - path: ../environments/.env.db
+        required: false 
+    volumes:
+      - "$DATABASE_DATA_PATH-/storage/infra/gate_postgres/data:/var/lib/postgresql/data/"
+    ports:
+      - ${DATABASE_PORT-5432}:5432

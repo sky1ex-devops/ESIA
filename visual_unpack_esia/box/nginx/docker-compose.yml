@@ -1,0 +1,28 @@
+x-log: &log
+  options:
+    max-size: '50m'
+    max-file: '3'
+    labels: com.docker.compose.service
+  driver: json-file
+
+x-base: &base
+  restart: always
+  stop_grace_period: ${STOP_GRACE_PERIOD-30}s
+  logging: *log
+
+services:
+  ng-proxy:
+    container_name: nginx-gate
+    image: nginx:latest
+    <<: *base
+    env_file:
+      - .env
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/proxy.conf:/etc/nginx/proxy.conf
+      - ./nginx/ssl/:/etc/nginx/ssl/
+      - "$NGINX_LOGS:/var/log/nginx/"
+    network_mode: host
+    ports:
+      - ${NGINX_PORT-443}:443
+      

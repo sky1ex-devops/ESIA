@@ -1,0 +1,12 @@
+
+http:
+  middlewares:
+    sslheader:
+      headers:
+        customRequestHeaders:
+          X-Forwarded-Proto: "https"
+    trimwww:
+      redirectRegex:
+        regex: "^https://www.(.+)"
+        replacement: "https://${1}"
+        permanent: true  

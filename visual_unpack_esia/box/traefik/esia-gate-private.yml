@@ -1,0 +1,9 @@
+
+http:
+  routers:
+    esia-gate-private:
+      rule: "Host(`esia.example.com`) && PathPrefix(`/users/`, `/packs/`, `/profile/`, `/uni_systems/`, `/ci_systems/`, `/statistics/`, `/settings/`, `/reference_info/`)"
+      service: esia-service@file
+      tls: {}
+      entryPoints:
+        - "websecure"

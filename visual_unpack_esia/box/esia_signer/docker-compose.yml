@@ -1,0 +1,30 @@
+x-log: &log
+  options:
+    max-size: '50m'
+    max-file: '3'
+    labels: com.docker.compose.service
+  driver: json-file
+
+x-base: &base
+  restart: always
+  stop_grace_period: ${STOP_GRACE_PERIOD-30}s
+  logging: *log
+  
+services:
+  signer_gw:
+    <<: *base
+    container_name: signer
+    image: ${SIGNER_IMAGE}:${SIGNER_IMAGE_TAG}
+    env_file: 
+      - path: .env
+        required: true
+      - path: ../environments/.env.signer
+        required: false 
+    volumes:
+      - "${SERVICE_CONFIG_PATH}/config.yml:/home/app/config.yml"
+      - "${OPENSSL_KEYS_PATH}:/home/app/openssl_keys"
+      - "${CSP_KEYS_PATH}:/var/opt/cprocsp/keys/root"
+    command: ["--config", "/home/app/config.yml"]
+    ports:
+      - ${SIGNER_WEB_PORT-8505}:8505
+

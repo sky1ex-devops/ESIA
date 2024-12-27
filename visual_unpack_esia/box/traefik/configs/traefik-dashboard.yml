@@ -1,0 +1,10 @@
+http:
+  routers:
+    traefik-dashboard:
+      rule: "Host(`traefik.esia.example.com`)"
+      service: "api@internal"
+      middlewares:
+        - private-allowlist
+      entryPoints:
+        - "websecure"
+      tls: {}

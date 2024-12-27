@@ -1,0 +1,35 @@
+
+log:
+  level: DEBUG
+
+accessLog:
+  bufferingSize: 200
+
+global:
+  checkNewVersion: false
+  sendAnonymousUsage: false
+
+api:
+  dashboard: true
+
+providers:
+  file:
+    directory: /etc/traefik/configs
+    watch: true
+
+entryPoints:
+  web:
+    address: ":80"
+  websecure:
+    address: ":443"
+    http:
+      middlewares:
+        - sslheader@file
+        - trimwww@file
+
+tls:
+  stores:
+    default:
+      defaultCertificate:
+        certFile: /etc/traefik/ssl/cert.crt
+        keyFile: /etc/traefik/ssl/private.key

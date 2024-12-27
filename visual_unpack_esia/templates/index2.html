@@ -1,0 +1,168 @@
+{# templates/base.html #}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>{{ title }}</title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="" href="{{ url_for('static', filename='css/style.css') }}">
+
+<style>
+.sidenav {
+    height: 100%; /* Full-height: remove this if you want "auto" height */
+    width: 300px; /* Set the width of the sidebar */
+    position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+    z-index: 1; /* Stay on top */
+    top: 0; /* Stay at the top */
+    left: 0;
+    background-color: #111; /* Black */
+    overflow-x: hidden; /* Disable horizontal scroll */
+    padding-top: 12px;
+}
+
+.body {
+    height: 100%; /* Full-height: remove this if you want "auto" height */
+    width: 300px; /* Set the width of the sidebar */
+    position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+    z-index: 1; /* Stay on top */
+    top: 0; /* Stay at the top */
+    left: 305px;
+    background-color: #b44b05; /* Black */
+    overflow-x: hidden; /* Disable horizontal scroll */
+    padding-top: 12px;
+}
+
+/* The navigation menu links */
+.sidenav a {
+    padding: 1px 8px 1px 16px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #fdfdfd;
+    display: block;
+}
+
+.sidenav h2 {
+    padding: 1px 8px 1px 16px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #fdfdfd;
+    display: block;
+}
+
+.sidenav2 a {
+    padding: 1px 8px 1px 16px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #fdfdfd;
+    display: block;
+}
+
+.sidenav2 h2 {
+    padding: 1px 8px 1px 16px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #fdfdfd;
+    display: block;
+}
+
+.sidenav button {
+    padding: 1px 1px 1px 16px;
+    text-decoration: none;
+    font-size: 18px;
+    border: medium none;
+	  background-image: none; 
+	  background: transparent;
+    display: block;
+    color: #fdfdfd;
+}
+
+.sidenav2 button {
+    padding: 1px 1px 1px 16px;
+    text-decoration: none;
+    font-size: 18px;
+    border: medium none;
+	  background-image: none; 
+	  background: transparent;
+    display: block;
+    color: #fdfdfd;
+}
+
+
+/* When you mouse over the navigation links, change their color */
+.sidenav a:hover {
+    color: #acacaccb;
+}
+
+.sidenav2 a:hover {
+    color: #8a8a8a88;
+}
+
+/* Style page content */
+.main {
+    margin-left: 56px; /* Same as the width of the sidebar */
+    padding: 180px 15px;
+    color: hsl(24deg,100%,47%);
+}
+ 
+.main2{
+    margin-left: 56px; /* Same as the width of the sidebar */
+    padding: 12px 15px;
+    display: block;
+    margin: 20px;
+    width: auto;
+    color: #fdfdfd;
+} 
+
+.textin{
+    color: #fff; background: transparent; border: none; border-bottom: 1px solid #fff;
+}
+
+/* На небольших экранах, где высота меньше 450 пикселей, измените стиль боковой панели (меньше отступов и меньший размер шрифта) */
+@media screen and (max-height: 450px) {
+    .sidenav {padding-top: 5px;}
+    .sidenav a {font-size: 25px;}
+    .sidenav h2 {font-size: 25px;}
+    .sidenav2 {padding-top: 5px;}
+}
+
+
+</style>
+
+</head>
+
+<body style="background-color: #000000">
+    <img src="{{url_for('static', filename='logo-ae5da1b5409498390a45c78d980cf949e2151129cb3ab4b4f309290dac32b91e.svg')}}"/>
+<!-- Page content -->
+<div class="main">
+  <h1>Давайте настроим {{ title }}!</h1>
+
+  <!-- Просим заполнить переменные для ЕСИА-Шлюза -->
+<div class="main2">
+    <form method="post" action="/search">
+        <h3>Репозиторий ЕСИА-шлюза (SENTINEL_IMAGE)   <input class="textin" type="text" size="50px" name="SENTINEL_IMAGE" value="harbor.rnds.pro/sentinel/sentinel-ror"/></h3>
+       
+        <h3>Версия коробки ЕСИА-шлюза(SENTINEL_IMAGE_TAG)   <input class="textin" type="text" size="50px" name="SENTINEL_IMAGE_TAG" value="box2.32"></h3>
+        
+        <h3>URI адрес ЕСИА Шлюза (ESIA_GATE_URI)   <input class="textin" type="text" size="50px" name="ESIA_GATE_URI" value= "https://esia.example.com"></h3>
+
+        <h2> Адреса хостов инфраструктуры Шлюза</h2>
+        <h3>Заменить на IP адрес инстанса установки signer (SIGNER_IP)   <input class="textin" type="text" size="50px" name="SIGNER_IP" value="192.168.88.126"></h3>
+        <h3>Заменить на IP адрес инстанса размещения базы данных PostgreSQL (DATABASE_IP)   <input class="textin" type="text" size="50px" name="DATABASE_IP" value="192.168.88.126"></h3>
+        <h3>Заменить на IP адрес инстанса размещения базы данных Redis (REDIS_IP)   <input class="textin" type="text" size="50px" name="REDIS_IP" value="192.168.88.126"></h3>
+        
+        <h2>Пароль к главной учетной записи ЕСИА Шлюза (логин - admin@esia.pro)</h2>
+        <h3>MAIN_ADMIN_PASSWORD   <input class="textin" type="text" size="50px" name="MAIN_ADMIN_PASSWORD" value="768^bBrmeMC"></h3>
+     
+        <h2>Настройки доступа к вашему почтовому серверу</h2>
+        <h3>SMTP_ADDRESS   <input class="textin" type="text" size="50px" name="SMTP_ADDRESS" value="mail.yandex.ru"></h3>
+        <h3>SMTP_USER_NAME   <input class="textin" type="text" size="50px" name="SMTP_USER_NAME" value="test"></h3>
+        <h3>SMTP_PASSWORD   <input class="textin" type="text" size="50px" name="SMTP_PASSWORD" value="testpass"></h3>
+        <h3>SMTP_PORT   <input class="textin" type="text" size="50px" name="SMTP_PORT" value="465"></h3>
+  
+        <input type="submit" value="Применить">
+      </form>
+</div>
+</div>
+
+</body>
+</html>

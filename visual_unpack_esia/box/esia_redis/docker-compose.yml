@@ -1,0 +1,28 @@
+x-log: &log
+  options:
+    max-size: '50m'
+    max-file: '3'
+    labels: com.docker.compose.service
+  driver: json-file
+
+x-base: &base
+  restart: always
+  stop_grace_period: ${STOP_GRACE_PERIOD-30}s
+  logging: *log
+
+services:
+  redis-gw:
+    container_name: redis
+    <<: *base
+    mem_limit: 500M
+    image: ${REDIS_IMAGE}:${REDIS_IMAGE_TAG}
+    env_file: 
+      - path: .env
+        required: true
+      - path: ../environments/.env.redis
+        required: false 
+    volumes:
+      - $REDIS_DATA_PATH-/storage/infra/redis_postgres/data:/data/
+      - $REDIS_DATA_PATH/tmp:/tmp
+    ports:
+      - ${REDIS_PORT-6379}:6379
