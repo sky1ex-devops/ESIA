@@ -1,5 +1,6 @@
 from flask import Flask, render_template, render_template, request
 from flask import url_for
+import os
 
 
 app = Flask(__name__) # Создаем переменную app и записываем в неё класс Flask с функцией __name__
@@ -7,7 +8,7 @@ app = Flask(__name__) # Создаем переменную app и записы�
 
 @app.route('/') # создаем маршрут /
 def home(): # создаем функцию home без параметров
-    return render_template("index.html", title="ЕСИА-Шлюз") # Возвращаем шаблон base.html и заполняем в нем переменную title
+    return render_template("index.html", title="RNDSOFT | ЕСИА-Шлюз") # Возвращаем шаблон base.html и заполняем в нем переменную title
 
 
 @app.route('/run', methods=['POST'])
@@ -64,6 +65,8 @@ def run():
 
 # Переменные окружения базы данных
     ## Значения Docker образа для БД
+    dbchbx = request.form.get('dbchbx')
+
     DATABASE_IMAGE = request.form['DATABASE_IMAGE']
     DATABASE_IMAGE_TAG = request.form['DATABASE_IMAGE_TAG']
 
@@ -80,6 +83,8 @@ def run():
 
 # Переменные окружения Redis
     ## Путь к файлам Redis на хостовой машине
+    redischbx = request.form.get('redischbx')
+
     REDIS_DATA_PATH = request.form['REDIS_DATA_PATH']
 
     ## Значения Docker образа для Redis
@@ -89,6 +94,11 @@ def run():
     ## Внешний порт контейнера Redis
     REDIS_PORT = request.form['REDIS_PORT']
 
+    
+    
+    traefikchbx = request.form.get('traefikchbx')
+    nginxchbx = request.form.get('nginxchbx')
+    
 
     with open(r"./.env.test", "w") as file:
         ## Переменные окружения ЕСИА Шлюза
@@ -178,7 +188,15 @@ def run():
         file.write("REDIS_DATA_PATH=" + repr(REDIS_DATA_PATH) + '\n\n') 
 
 
-    return render_template(f"base.html", title="ЕСИА-Шлюз",
+       # Переменные Дополнительные образы
+
+  
+        param = (f"cd ./scripts && ./box_run.sh {dbchbx if dbchbx is not None else ''} {redischbx if redischbx is not None else ''} {traefikchbx if traefikchbx is not None else ''} {nginxchbx if nginxchbx is not None else ''}")
+        os.system(param)
+
+        
+
+    return render_template(f"base.html", title="RNDSOFT | ЕСИА-Шлюз",
     SENTINEL_IMAGE = SENTINEL_IMAGE,
     SENTINEL_IMAGE_TAG = SENTINEL_IMAGE_TAG,
     ESIA_GATE_URI = ESIA_GATE_URI,
@@ -211,7 +229,7 @@ def run():
     REDIS_DATA_PATH = REDIS_DATA_PATH,
     REDIS_IMAGE = REDIS_IMAGE,
     REDIS_IMAGE_TAG = REDIS_IMAGE_TAG,
-    REDIS_PORT = REDIS_PORT
+    REDIS_PORT = REDIS_PORT ,
 )
 
 if __name__ == "__main__":
